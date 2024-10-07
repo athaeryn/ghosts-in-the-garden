@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7gsts6l50kgc"]
+
+[ext_resource type="Script" path="res://room.gd" id="1_cca48"]
+
+[node name="NorthRoom" type="Area2D"]
+position = Vector2(0, -946)
+script = ExtResource("1_cca48")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,10 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+EXPORT/
+
+ghosts-in-the-garden.zip
+
+.png.import
+.mp3.import
+.ttf.import

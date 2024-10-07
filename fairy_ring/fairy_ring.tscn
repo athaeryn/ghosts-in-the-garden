@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkukl1fklm43r"]
+
+[ext_resource type="Texture2D" uid="uid://b7x3378x6jjsa" path="res://assets/fairyring_unlit.png" id="1_4vrlj"]
+[ext_resource type="Script" path="res://fairy_ring/fairy_ring.gd" id="1_ou7kn"]
+[ext_resource type="Texture2D" uid="uid://bxccbhdpqhwbs" path="res://assets/fairyring_lit_all.png" id="2_2gjnj"]
+[ext_resource type="Texture2D" uid="uid://ya0xgtdkf7hs" path="res://assets/fairyring_lit_left.png" id="3_fpyx0"]
+[ext_resource type="Texture2D" uid="uid://656fihtgcyj5" path="res://assets/fairyring_lit_right.png" id="4_u171b"]
+[ext_resource type="Texture2D" uid="uid://l3qhira6xwil" path="res://assets/fairyring_lit_top.png" id="5_d34co"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ohf0m"]
+radius = 26.0
+height = 108.0
+
+[node name="FairyRing" type="Node2D" node_paths=PackedStringArray("north_sprite", "west_sprite", "east_sprite", "all_lit_sprite")]
+z_index = -1
+z_as_relative = false
+script = ExtResource("1_ou7kn")
+north_sprite = NodePath("FairyringLitTop")
+west_sprite = NodePath("FairyringLitLeft")
+east_sprite = NodePath("FairyringLitRight")
+all_lit_sprite = NodePath("FairyringLitAll")
+
+[node name="FairyringUnlit" type="Sprite2D" parent="."]
+position = Vector2(0, -68)
+texture = ExtResource("1_4vrlj")
+
+[node name="InnerDetector" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -85)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InnerDetector"]
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_ohf0m")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, -109)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-63, 118, -44, 98, -61, 82, -78, 82, -105, 70, -123, 42, -95, 13, -45, -8, 2, -9, 47, -7, 83, 4, 112, 21, 123, 42, 100, 62, 62, 78, 47, 96, 52, 116, 91, 108, 128, 79, 142, 44, 129, 18, 96, -3, 55, -18, 9, -24, -40, -23, -84, -10, -123, 13, -141, 40, -133, 75, -110, 99)
+
+[node name="FairyringLitAll" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -68)
+texture = ExtResource("2_2gjnj")
+
+[node name="FairyringLitLeft" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -68)
+texture = ExtResource("3_fpyx0")
+
+[node name="FairyringLitRight" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -68)
+texture = ExtResource("4_u171b")
+
+[node name="FairyringLitTop" type="Sprite2D" parent="."]
+visible = false
+y_sort_enabled = true
+position = Vector2(0, -68)
+texture = ExtResource("5_d34co")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="body_entered" from="InnerDetector" to="." method="_on_inner_detector_body_entered"]

@@ -1,0 +1,242 @@
+[gd_scene load_steps=10 format=3 uid="uid://dljvp4f28o4n8"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_a06bo"]
+[ext_resource type="Shader" path="res://camera/camera_offset.gdshader" id="1_xmjj3"]
+[ext_resource type="PackedScene" uid="uid://dr0fmjxana3i5" path="res://game.tscn" id="2_f01ow"]
+[ext_resource type="PackedScene" uid="uid://bvass8jbc230j" path="res://heart/heart.tscn" id="4_e2tgp"]
+[ext_resource type="Texture2D" uid="uid://tdkpavyup885" path="res://assets/heart_container.png" id="4_we403"]
+[ext_resource type="PackedScene" uid="uid://cgo6sfeet36ne" path="res://message/message.tscn" id="6_j4xr0"]
+[ext_resource type="FontFile" uid="uid://dvgr8ghnsevyl" path="res://assets/font/Sniglet Regular.ttf" id="6_wb6jn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sakog"]
+shader = ExtResource("1_xmjj3")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gdlc0"]
+font = ExtResource("6_wb6jn")
+font_size = 48
+font_color = Color(0.137255, 0.12549, 0.203922, 1)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_a06bo")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_sakog")
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(3, 3)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+unique_name_in_owner = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Game" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_f01ow")]
+position = Vector2(300, 235)
+
+[node name="HealthBar" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Control" type="Control" parent="HealthBar"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HeartContainerBG" type="TextureRect" parent="HealthBar/Control"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = -9.0
+offset_right = 518.0
+offset_bottom = 211.0
+texture = ExtResource("4_we403")
+
+[node name="HeartContainer" type="HBoxContainer" parent="HealthBar/Control"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 65.0
+offset_right = 267.0
+offset_bottom = 161.0
+
+[node name="Heart" parent="HealthBar/Control/HeartContainer" instance=ExtResource("4_e2tgp")]
+layout_mode = 2
+
+[node name="Heart2" parent="HealthBar/Control/HeartContainer" instance=ExtResource("4_e2tgp")]
+layout_mode = 2
+
+[node name="Heart3" parent="HealthBar/Control/HeartContainer" instance=ExtResource("4_e2tgp")]
+layout_mode = 2
+
+[node name="Heart4" parent="HealthBar/Control/HeartContainer" instance=ExtResource("4_e2tgp")]
+layout_mode = 2
+
+[node name="Messages" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SomethingWrong" parent="Messages" instance=ExtResource("6_j4xr0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 896.0
+offset_right = 936.0
+
+[node name="ColorRect" type="ColorRect" parent="Messages/SomethingWrong"]
+layout_mode = 0
+offset_left = -528.0
+offset_top = -29.0
+offset_right = 572.0
+offset_bottom = 61.0
+
+[node name="Label" type="Label" parent="Messages/SomethingWrong"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -582.0
+offset_top = -24.0
+offset_right = 582.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "The Faerie Ring has lost its glow..."
+label_settings = SubResource("LabelSettings_gdlc0")
+horizontal_alignment = 1
+
+[node name="AnyoneInTrouble" parent="Messages" instance=ExtResource("6_j4xr0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 906.0
+offset_right = 946.0
+
+[node name="ColorRect" type="ColorRect" parent="Messages/AnyoneInTrouble"]
+layout_mode = 0
+offset_left = -528.0
+offset_top = -29.0
+offset_right = 572.0
+offset_bottom = 61.0
+
+[node name="Label" type="Label" parent="Messages/AnyoneInTrouble"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -582.0
+offset_top = -24.0
+offset_right = 582.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "I should see if anyone is in trouble!"
+label_settings = SubResource("LabelSettings_gdlc0")
+horizontal_alignment = 1
+
+[node name="FrogNeedsHelp" parent="Messages" instance=ExtResource("6_j4xr0")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 906.0
+offset_right = 946.0
+
+[node name="ColorRect" type="ColorRect" parent="Messages/FrogNeedsHelp"]
+layout_mode = 0
+offset_left = -528.0
+offset_top = -29.0
+offset_right = 572.0
+offset_bottom = 61.0
+
+[node name="Label" type="Label" parent="Messages/FrogNeedsHelp"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -582.0
+offset_top = -24.0
+offset_right = 582.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ghosts?! That frog needs help!"
+label_settings = SubResource("LabelSettings_gdlc0")
+horizontal_alignment = 1
+
+[node name="KeepLooking" parent="Messages" instance=ExtResource("6_j4xr0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 906.0
+offset_right = 946.0
+
+[node name="ColorRect" type="ColorRect" parent="Messages/KeepLooking"]
+layout_mode = 0
+offset_left = -528.0
+offset_top = -29.0
+offset_right = 572.0
+offset_bottom = 61.0
+
+[node name="Label" type="Label" parent="Messages/KeepLooking"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -582.0
+offset_top = -24.0
+offset_right = 582.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "That's helping! I should keep looking."
+label_settings = SubResource("LabelSettings_gdlc0")
+horizontal_alignment = 1
+
+[node name="IDidIt" parent="Messages" instance=ExtResource("6_j4xr0")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 906.0
+offset_right = 946.0
+
+[node name="ColorRect" type="ColorRect" parent="Messages/IDidIt"]
+layout_mode = 0
+offset_left = -528.0
+offset_top = -29.0
+offset_right = 572.0
+offset_bottom = 61.0
+
+[node name="Label" type="Label" parent="Messages/IDidIt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -582.0
+offset_top = -24.0
+offset_right = 582.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "I did it! The faeries are happy. :)"
+label_settings = SubResource("LabelSettings_gdlc0")
+horizontal_alignment = 1
+
+[connection signal="show_message" from="SubViewportContainer/SubViewport/Game" to="." method="_on_game_show_message"]
